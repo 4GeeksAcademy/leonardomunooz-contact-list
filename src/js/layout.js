@@ -12,6 +12,7 @@ import { Footer } from "./component/footer";
 
 import Contact from "./views/Contact.jsx";
 import AddContact from "./views/AddContact.jsx";
+import UpdateContact from "./views/UpdateContact.jsx";
 import NotFound from "./views/NotFound.jsx";
 
 //create your first component
@@ -24,14 +25,16 @@ const Layout = () => {
 		<div>
 			<BrowserRouter basename={basename}>
 				<ScrollToTop>
-					
+
 					<Routes>
 						<Route path="/" element={<Contact />} />
 						<Route path="/addcontact" element={<AddContact />} />
 						{/* <Route path="/single/:theid" element={<Single />} /> */}
+						<Route path="/update/:id" element={<UpdateContact />} />
 						<Route path="*" element={<NotFound />} />
+
 					</Routes>
-		
+
 				</ScrollToTop>
 			</BrowserRouter>
 		</div>

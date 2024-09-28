@@ -19,14 +19,11 @@ const Contact = () => {
             <ul className="list-group col-12">
 
                 {
-                    store.todos.map((contact) => {
+                    store.contacts.map((contact) => {
                         return (
                             <ContactCard
                                 key={contact.id}
-                                name={contact.name}
-                                email={contact.email}
-                                phone={contact.phone}
-                                address={contact.address}
+                                contact={contact}
                             />
                         )
                     })

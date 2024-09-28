@@ -2,14 +2,13 @@ import React, { useState, useContext } from 'react'
 import { Link } from 'react-router-dom';
 import { Context } from '../store/appContext';
 
-const initialContact = {
+export const initialContact = {
     "name": "",
     "phone": "",
     "email": "",
     "address": ""
 }
 
-const URL_BASE = "https://playground.4geeks.com/contact"
 
 const AddContact = () => {
 
@@ -31,42 +30,11 @@ const AddContact = () => {
             console.log('Alguno de los campos esta vacio');
 
         } else {
-            setAgenda([
-                ...agenda, contact
-            ])
-            actions.createContact(agenda, contact)
+            actions.createContact(contact)
         }
         setContact(initialContact)
 
     }
-
-    // const createContact = async () => {
-    //     try {
-    //         const response = await fetch(`${URL_BASE}/agendas/leonardo-agenda/contacts`, {
-    //             method: "POST",
-    //             headers: {
-    //                 "Content-Type": "application/json"
-    //             },
-    //             body: JSON.stringify(contact)
-    //         })
-
-    //         if (response.ok) {
-    //             console.log('se ha guardado el contacto');
-    //             setAgenda([
-    //                 ...agenda, contact
-    //             ])
-
-    //         } else {
-    //             console.log('algo ha ocurrido');
-
-    //         }
-    //         setContact(initialContact)
-    //     } catch (error) {
-    //         console.log(error);
-
-    //     }
-    // }
-
     return (
         <div className="container d-flex  flex-column justify-content-center " style={{ height: "100vh" }}>
             <h2 className='text-center fw-bolder '>Add a new contact</h2>
