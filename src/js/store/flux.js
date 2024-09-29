@@ -68,21 +68,37 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				}
 			},
-			getAllContact: async (contact) => {
+			createAgenda: async () => {
+				try {
+					const response = fetch(`${getStore().urlContactList}/agendas/leonardo-agenda`, {
+						method: "POST"
+					})
+					if (response.status === 201) {
+						console.log('Se ha creado la agenda');
+						return true
+					} else {
+						return false
+					}
+				} catch (error) {
+					console.log(error);
+
+				}
+			},
+			getAllContact: async () => {
 				const { urlContactList } = getStore()
 
 				try {
 					const response = await fetch(`${urlContactList}/agendas/leonardo-agenda/contacts`)
 					const data = await response.json(response)
 
-					if (response.status === 404) {
-						console.log('Aqui puedes crear el contacto');
-
-					} else {
+					if (response.ok) {
 
 						setStore({
 							contacts: data.contacts
 						})
+					} else if (response.status === 404) {
+
+						getActions().createAgenda()
 
 					}
 
@@ -99,8 +115,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					if (response.ok) {
 						console.log('Usuario eliminado');
 						console.log(id);
-
 						getActions().getAllContact()
+
 					} else {
 						console.log('No se encuentra el usuario');
 
