@@ -7,27 +7,27 @@ const ContactCard = ({ contact }) => {
     const { store, actions } = useContext(Context)
 
     const handleDelete = async (id) => {
-        const response = await actions.deleteContact(id)
-        console.log(response);
+        const response =
+            console.log(response);
 
-        if (response) {
-            Swal.fire({
-                title: "Do you want to save the changes?",
-                showDenyButton: true,
-                showCancelButton: true,
-                confirmButtonText: "Save",
-                denyButtonText: `Don't save`
-            }).then((response) => {
+        Swal.fire({
+            title: "Do you want to save the changes?",
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: "Save",
+            denyButtonText: `Don't save`
+        }).then((response) => {
 
-                /* Read more about isConfirmed, isDenied below */
-                if (response.isConfirmed) {
-                    Swal.fire("Saved!", "", "success");
+            /* Read more about isConfirmed, isDenied below */
+            if (response.isConfirmed) {
+                Swal.fire("Saved!", "", "success");
+                await actions.deleteContact(id)
 
-                } else if (response.isDenied) {
-                    Swal.fire("Changes are not saved", "", "info");
-                }
-            });
-        }
+            } else if (response.isDenied) {
+                Swal.fire("Changes are not saved", "", "info");
+            }
+        });
+
     }
 
     const handleUpdate = () => {
