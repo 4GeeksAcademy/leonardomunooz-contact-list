@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { Link } from 'react-router-dom';
 import { Context } from '../store/appContext';
+import Swal from 'sweetalert2';
 
 export const initialContact = {
     "name": "",
@@ -24,15 +25,28 @@ const AddContact = () => {
             [e.target.name]: e.target.value
         })
     }
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
 
         if (contact.name === '' || contact.email === '' || contact.phone === '' || contact.address === '') {
-            console.log('Alguno de los campos esta vacio');
+            Swal.fire({
+                title: "Alguno de los campos estan vacios",
+                text: "Verifique nuevamente",
+                icon: "question"
+            });
 
         } else {
-            actions.createContact(contact)
+            const response = await actions.createContact(contact)
+            if (response) {
+                Swal.fire({
+                    position: "top-center",
+                    icon: "success",
+                    title: "El usuario ha sido agregado",
+                    showConfirmButton: true
+                });
+            }
+            setContact(initialContact)
         }
-        setContact(initialContact)
+
 
     }
     return (

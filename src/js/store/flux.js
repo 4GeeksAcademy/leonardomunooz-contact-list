@@ -56,12 +56,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					if (response.ok) {
 						console.log('se ha guardado el contacto');
-						getActions().getAllContact()
+						await getActions().getAllContact()
+						return true
 
 					} else {
 						console.log('algo ha ocurridoooooooo');
-
+						return false
 					}
+
 
 				} catch (error) {
 					console.log(error);
@@ -91,15 +93,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const response = await fetch(`${urlContactList}/agendas/leonardo-agenda/contacts`)
 					const data = await response.json(response)
 
-					if (response.ok) {
+					if (response.status == 404) {
+						getActions().createAgenda()
+						console.log('AQUII');
 
+					}
+					if (response.ok) {
 						setStore({
 							contacts: data.contacts
 						})
-					} else if (response.status === 404) {
-
-						getActions().createAgenda()
-
 					}
 
 				} catch (error) {
@@ -116,15 +118,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 						console.log('Usuario eliminado');
 						console.log(id);
 						getActions().getAllContact()
+						return true
 
 					} else {
 						console.log('No se encuentra el usuario');
-
+						return false
 					}
 
 				} catch (error) {
 					console.log(error);
-
 				}
 			},
 			updateContact: async (contact, id) => {

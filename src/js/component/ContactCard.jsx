@@ -1,14 +1,35 @@
 import React, { useContext } from "react"
 import { Context } from "../store/appContext";
 import { Link, useParams } from "react-router-dom";
-
+import Swal from 'sweetalert2';
 
 const ContactCard = ({ contact }) => {
     const { store, actions } = useContext(Context)
-    
-    const handleDelete = (id) => {
-        actions.deleteContact(id)
+
+    const handleDelete = async (id) => {
+        const response = await actions.deleteContact(id)
+        console.log(response);
+
+        if (response) {
+            Swal.fire({
+                title: "Do you want to save the changes?",
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: "Save",
+                denyButtonText: `Don't save`
+            }).then((response) => {
+
+                /* Read more about isConfirmed, isDenied below */
+                if (response.isConfirmed) {
+                    Swal.fire("Saved!", "", "success");
+
+                } else if (response.isDenied) {
+                    Swal.fire("Changes are not saved", "", "info");
+                }
+            });
+        }
     }
+
     const handleUpdate = () => {
         actions.updateContact()
     }
@@ -62,5 +83,8 @@ const ContactCard = ({ contact }) => {
         </li>
     )
 }
+
+
+
 
 export default ContactCard;
