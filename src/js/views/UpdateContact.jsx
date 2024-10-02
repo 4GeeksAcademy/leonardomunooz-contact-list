@@ -47,8 +47,6 @@ const UpdateContact = () => {
                 confirmButtonText: "Editar",
                 denyButtonText: `No Editar`
             }).then((response) => {
-
-                /* Read more about isConfirmed, isDenied below */
                 if (response.isConfirmed) {
                     Swal.fire("Guardado!", "", "success");
                     actions.updateContact(contact, contact.id)

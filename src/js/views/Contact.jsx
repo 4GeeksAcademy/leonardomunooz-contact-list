@@ -1,14 +1,12 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { Context } from '../store/appContext.js'
-
-
 import ContactCard from '../component/ContactCard.jsx'
+
 
 const Contact = () => {
     const { store } = useContext(Context)
     // console.log(store.todos);
-
     return (
         <div className="container ">
             <div className="d-flex justify-content-end  py-4" >
