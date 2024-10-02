@@ -1,6 +1,16 @@
+.contact-img-wrapper, .list-unstyled {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
 .contact-img {
     width: 120px;
     height: 120px;
     border-radius: 50%;
     object-fit:cover;
+  
 }
+
+

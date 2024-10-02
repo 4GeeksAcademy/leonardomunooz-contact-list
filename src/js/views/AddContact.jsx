@@ -51,11 +51,11 @@ const AddContact = () => {
     }
     return (
         <div className="container d-flex  flex-column justify-content-center " style={{ height: "100vh" }}>
-            <h2 className='text-center fw-bolder '>Add a new contact</h2>
+            <h2 className='text-center fw-bolder text-white rounded '>Add a new contact</h2>
             <div className="row">
-                <div className="col-12 col-md-7 border m-auto p-4 ">
+                <div className="col-12 col-md-6  m-auto p-4 rounded-3 " style={{ backgroundColor: "#7569c6" }}>
                     <form
-                        className="row g-3"
+                        className="row g-3 "
                         onClick={(e) => e.preventDefault()}
                     >
                         <div className="col-12">
@@ -75,9 +75,9 @@ const AddContact = () => {
                             <input type="text" className="form-control" id="inputAddress" placeholder="1234 Main St" name='address' onChange={handleChange} value={contact.address} />
                         </div>
                         <div className="col-12">
-                            <button type="submit" className="btn btn-primary w-100" onClick={handleSubmit} >save</button>
+                            <button type="submit" className="btn btn-custom-save  w-100" onClick={handleSubmit} >save</button>
                         </div>
-                        <Link to="/">or get back to contacts</Link>
+                        <Link to="/" style={{ color: "#e6e0ec" }}> or get back to contacts</Link>
                     </form>
                 </div>
             </div>

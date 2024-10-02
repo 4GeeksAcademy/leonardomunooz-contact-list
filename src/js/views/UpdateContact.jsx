@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext.js";
-
+import Swal from 'sweetalert2';
 const initialContactEdit = {
     "name": "",
     "phone": "",
@@ -19,10 +19,7 @@ const UpdateContact = () => {
 
     const findContact = () => {
         const contactEdit = store.contacts.find((element) => element.id == params.id)
-        console.log(store.contacts);
         setContact(contactEdit)
-        console.log(contactEdit)
-
     }
 
     const handleChange = (e) => {
@@ -34,26 +31,48 @@ const UpdateContact = () => {
     const handleSubmit = (e) => {
 
         if (contact.name === '' || contact.email === '' || contact.phone === '' || contact.address === '') {
-            console.log('Alguno de los campos esta vacio');
+            Swal.fire({
+                title: "Alguno de los campos estan vacios",
+                text: "Verifique nuevamente",
+                icon: "question"
+            });
 
-        } {
-            actions.updateContact(contact, contact.id)
+        } else {
+
+
+            Swal.fire({
+                title: "¿Desea editar el contacto?",
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: "Editar",
+                denyButtonText: `No Editar`
+            }).then((response) => {
+
+                /* Read more about isConfirmed, isDenied below */
+                if (response.isConfirmed) {
+                    Swal.fire("Guardado!", "", "success");
+                    actions.updateContact(contact, contact.id)
+                    setContact(initialContactEdit)
+
+                } else if (response.isDenied) {
+                    Swal.fire("Los cambios no fueron realizado", "", "info");
+                }
+            });
 
         }
-        setContact(initialContactEdit)
 
     }
     useEffect(() => {
         findContact()
-    }, [store.contacts]) //  
+    }, [store.contacts])
 
 
     return (
         // <h1>Update contact page {params.id}</h1>
         <div className="container d-flex  flex-column justify-content-center " style={{ height: "100vh" }}>
-            <h2 className='text-center fw-bolder '>Edit contact</h2>
+            <h2 className='text-center fw-bolder text-white '>Edit contact</h2>
             <div className="row">
-                <div className="col-12 col-md-7 border m-auto p-4 ">
+                <div className="col-12 col-md-6  m-auto  rounded-3 p-4" style={{ backgroundColor: "#7569c6" }}>
                     <form
                         className="row g-3"
                         onClick={(e) => e.preventDefault()}
@@ -75,9 +94,9 @@ const UpdateContact = () => {
                             <input type="text" className="form-control" id="inputAddress" placeholder="1234 Main St" name='address' onChange={handleChange} value={contact?.address} />
                         </div>
                         <div className="col-12">
-                            <button type="submit" className="btn btn-primary w-100" onClick={handleSubmit} >edit</button>
+                            <button type="submit" className="btn btn-custom-save w-100" onClick={handleSubmit} >edit</button>
                         </div>
-                        <Link to="/">or get back to contacts</Link>
+                        <Link to="/" style={{ color: "#e6e0ec" }}>or get back to contacts</Link>
                     </form>
                 </div>
             </div>
